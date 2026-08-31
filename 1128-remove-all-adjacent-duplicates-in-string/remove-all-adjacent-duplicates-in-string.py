@@ -6,8 +6,5 @@ class Solution(object):
                 stack.append(s[i])
             else:
                 stack.pop()
-        t = ""
-        for i in stack:
-            t = t + i
-        return t
+        return "".join(stack)
         
