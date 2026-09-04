@@ -11,9 +11,3 @@ class Solution(object):
             longest = max(longest, (right-left) +1)
         return longest
         
-                
-                
-
-
-                
-        
