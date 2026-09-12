@@ -15,15 +15,12 @@ class Solution(object):
             fast = fast.next.next
             if slow == fast:
                 break
-        if fast != slow:
+        if slow != fast:
             return None
         slow = head
         while fast != slow:
-            slow = slow.next
+            slow = slow.next 
             fast = fast.next
         return slow
-        
-
-        
         
         
