@@ -1,16 +1,16 @@
 class Solution(object):
     def change(self, amount, coins):
         n = len(coins)
-        dp = [[-1] * (amount +1) for _ in range(n)]
-        def solve(amount, coins, index):
-            if amount == 0:
-                return 1
-            if amount < 0 or index >= n:
-                return 0
-            if dp[index][amount] != -1:
-                return dp[index][amount]
-            dp[index][amount]= solve(amount, coins, index +1) + solve(amount- coins[index], coins, index)
-            return dp[index][amount]
-        return solve(amount, coins, 0)
+        dp = [[0] * (amount +1) for _ in range(n+1)]
+        def solve(amount):
+            for i in range(n+1):
+                dp[i][0] = 1
+            for i in range(n-1, -1, -1):
+                for j in range(1, amount + 1):
+                    dp[i][j]= dp[i+1][j]
+                    if j >= coins[i]:
+                        dp[i][j] += dp[i][j- coins[i]]
+            return dp[0][amount]
+        return solve(amount)
 
         
