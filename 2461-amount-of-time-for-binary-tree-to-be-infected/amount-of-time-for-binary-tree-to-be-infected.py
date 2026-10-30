@@ -6,30 +6,62 @@
 #         self.right = right
 class Solution(object):
     def amountOfTime(self, root, start):
-        parent = {}
-        start_node = [None]
-        def build(node, par=None):
-            if not node:
-                return
-            parent[node] = par
-            if node.val == start:
-                start_node[0] = node
-            build(node.left, node)
-            build(node.right, node)
-        build(root)
+        # self.res = 0
+        # def dfs(root, start, dist):
+        #     if not root:
+        #         return 0
+        #     if root.val == start:
+        #         dist[0] = 0
+        #         return 1
+        #     ldist = [-1]
+        #     rdist =[-1]
+        #     lh = dfs(root.left, start, ldist)
+        #     rh = dfs(root.right, start, rdist)
 
-        q = deque([start_node[0]])
-        visited = {start_node[0]}
-        time = -1
-        while q:
-            size = len(q)
-            time +=1
-            for _ in range(size):
-                node = q.popleft()
-                for nei in (node.left, node.right, parent[node]):
-                    if nei and nei not in visited:
-                        visited.add(nei)
-                        q.append(nei)
-        return time
+        #     if ldist[0] != -1:
+        #         dist[0] = ldist[0] +1
+        #         self.res = max(self.res, dist[0] + rh)
+            
+        #     elif rdist[0] != -1:
+        #         dist[0] = rdist[0] +1
+        #         self.res = max(self.res, dist[0] + lh)
+        #     return max(lh, rh) +1
+        # dist = [-1]
+        # dfs(root, start, dist)
+        # return self.res
+        self.res = 0
+
+        def dfs(root, start, dist):
+            if not root:
+                return 0
+
+            if root.val == start:
+                dist[0] = 0
+
+                lh = dfs(root.left, start, [-1])
+                rh = dfs(root.right, start, [-1])
+
+                self.res = max(self.res, lh, rh)
+
+                return max(lh, rh) + 1
+
+            ldist = [-1]
+            rdist = [-1]
+
+            lh = dfs(root.left, start, ldist)
+            rh = dfs(root.right, start, rdist)
+
+            if ldist[0] != -1:
+                dist[0] = ldist[0] + 1
+                self.res = max(self.res, dist[0] + rh)
+
+            elif rdist[0] != -1:
+                dist[0] = rdist[0] + 1
+                self.res = max(self.res, dist[0] + lh)
+
+            return max(lh, rh) + 1
+
+        dfs(root, start, [-1])
+        return self.res
 
         
