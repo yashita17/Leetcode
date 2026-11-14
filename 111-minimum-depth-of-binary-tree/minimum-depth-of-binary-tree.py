@@ -8,9 +8,15 @@ class Solution(object):
     def minDepth(self, root):
         if not root:
             return 0
-        if not root.left:
-            return(1+ self.minDepth(root.right))
-        if not root.right:
-            return (1+ self.minDepth(root.left))
-        return ( 1+ min(self.minDepth(root.left), self.minDepth(root.right)))
+        qu = deque([(root, 1)])
+        while qu:
+            node, depth = qu.popleft()
+            if not node.left and not node.right:
+                return depth
+            if node.left:
+                qu.append((node.left, depth+1))
+            if node.right:
+                qu.append((node.right, depth+1))
+            
+
         
