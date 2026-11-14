@@ -15,19 +15,35 @@ class Solution(object):
             return None
         if not head.next:
             return TreeNode(head.val)
+        arr = []
+        temp = head
+        while temp:
+            arr.append(temp.val)
+            temp = temp.next
         
-        slow = fast = head
-        prev = slow
-        while fast and fast.next:
-            prev = slow
-            slow = slow.next
-            fast = fast.next.next
+        def conarr(arr):
+            if not arr:
+                return None
+            
+            mid = len(arr)//2
+            root = TreeNode(arr[mid])
+            root.left = conarr(arr[:mid])
+            root.right = conarr(arr[mid+1:])
+            return root
+        root = conarr(arr)
+        return root        
+        # slow = fast = head
+        # prev = slow
+        # while fast and fast.next:
+        #     prev = slow
+        #     slow = slow.next
+        #     fast = fast.next.next
         
-        root = TreeNode(slow.val)
-        prev.next = None
-        root.left = self.sortedListToBST(head)
-        root.right = self.sortedListToBST(slow.next)
-        return root
+        # root = TreeNode(slow.val)
+        # prev.next = None
+        # root.left = self.sortedListToBST(head)
+        # root.right = self.sortedListToBST(slow.next)
+        # return root
 
 
         
