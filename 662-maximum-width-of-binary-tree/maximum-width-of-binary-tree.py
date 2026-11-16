@@ -6,22 +6,25 @@
 #         self.right = right
 class Solution(object):
     def widthOfBinaryTree(self, root):
-        if root == None:
+        if not root:
             return 0
-        qu = deque([(root, 0)])
+        qu = deque([(root,0)])
         ans = 0
         while qu:
             size = len(qu)
             first = qu[0][1]
             for _ in range(size):
-                node, ind = qu.popleft()
+                node, index = qu.popleft()
                 if node.left:
-                    qu.append((node.left, 2*ind +1))
+                    qu.append((node.left, 2*index +1))
                 if node.right:
-                    qu.append((node.right, 2*ind +2))
-            last = ind
-            ans = max(ans, (last-first )+1)
+                    qu.append((node.right, 2*index +2))
+                last = index
+            ans = max(ans, last-first+1)
         return ans
+                
+
+
 
 
         
