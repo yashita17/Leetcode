@@ -6,15 +6,15 @@
 #         self.right = right
 class Solution(object):
     def maxPathSum(self, root):
-        self.Total = float('-inf')
+        self.total = float('-inf')
         def path(root):
             if not root:
                 return 0
             left = max(0, path(root.left))
             right = max(0, path(root.right))
             curr = root.val + left + right
-            self.Total = max(self.Total, curr)
+
+            self.total = max(self.total, curr)
             return root.val + max(left, right)
         path(root)
-        return self.Total
-        
+        return self.total        
