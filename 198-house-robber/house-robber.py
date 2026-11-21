@@ -1,19 +1,17 @@
 class Solution(object):
     def rob(self, nums):
-        index = 0
-        n = len(nums)   
+        n = len(nums)
         dp = [-1] * n
-        def solve(nums, index, n):
-            if index >= n:
+        def solve(ind):
+            if ind >= n:
                 return 0
-            if dp[index] != -1:
-                return dp[index]
-            op1 = nums[index] + solve(nums, index+2, n)
-            op2 = 0 + solve(nums, index+1, n)
-            ans = max(op1, op2)
-            dp[index] = ans
-            return dp[index]
-        final_ans = solve(nums, index, n)
-        return final_ans
+            if dp[ind] != -1:
+                return dp[ind]
+            inc = nums[ind] + solve(ind +2)
+            exc = 0 + solve(ind + 1)
+
+            dp[ind] = max(inc, exc)
+            return dp[ind]
+        return solve(0)
         
         
