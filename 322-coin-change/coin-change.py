@@ -1,22 +1,21 @@
 class Solution(object):
     def coinChange(self, coins, amount):
         n = len(coins)
-        dp = [[-1]*(amount+1) for _ in range(n)]
+        dp = [[float('inf')]*(amount+1) for _ in range(n+1)]
 
-        def solve(ind, amount):
-            if ind>= n or amount<0:
-                return float('inf')
-            if amount == 0:
-                return 0
-            if dp[ind][amount] != -1:
-                return dp[ind][amount]
-            ans = min(1+solve(ind, amount-coins[ind]), solve(ind+1, amount))
-            dp[ind][amount] = ans
-            return dp[ind][amount]
-        if solve(0,amount) == float('inf'):
+        for i in range(n+1):
+            dp[i][0]= 0
+        for i in range(1,n+1):
+            for j in range(1, amount+1):
+                not_take = dp[i-1][j]
+                if j >= coins[i-1]:
+                    take = 1+ dp[i][j- coins[i-1]]
+                else:
+                    take = float('inf')
+                dp[i][j] = min(take, not_take)
+        if dp[n][amount] == float('inf'):
             return -1
-        else:
-            return solve(0, amount)
-            
+        return dp[n][amount]
         
+
         
